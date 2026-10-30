@@ -16,6 +16,6 @@ export function deletar(indice) {
     produtos.splice(indice, 1);
 }
 
-export function buscarPorId(indice){
+export function buscarPorIndice(indice){
     return produtos[indice]
 }
