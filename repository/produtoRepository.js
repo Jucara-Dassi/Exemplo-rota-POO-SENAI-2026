@@ -1,21 +1,26 @@
-const produtos = []
+import conexao from '../config/conexao.js';
 
-export function cadastrar(produto) {
-    produtos.push(produto);
+export async function cadastrar(produto) {
+    const sql = "INSERT INTO produto (nome, descricao, preco, quantidade) VALUES (?, ?, ?)";
+    const [resultado] = await conexao.execute(sql, [
+        produto.descricao,
+        produto.preco,
+        produto.peso,
+    ]);
+
+    return resultado.insertId;
 }
 
-export function listar() {
-    return produtos;
+export async function listar() {
+    const sql = "SELECT * FROM produto";
+    const [resultado] = await conexao.execute(sql);
+
+    return resultado;
 }
 
-export function atualizar(indice, produto) {
-    produtos[indice] = produto;
-}
+export async function buscarPorId(id) {
+    const sql = "SELECT * FROM produto WHERE id_produto = ?";
+    const [resultado] = await conexao.execute(sql, [id]);
 
-export function deletar(indice) {
-    produtos.splice(indice, 1);
-}
-
-export function buscarPorIndice(indice){
-    return produtos[indice]
+    return resultado[0];
 }
